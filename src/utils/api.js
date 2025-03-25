@@ -17,13 +17,15 @@ api.interceptors.request.use((config) => {
 });
 
 // Define all API methods here
-export const getPosts = () => api.get('/post'); //DONE
-export const getPost = (id) => api.get(`/post/${id}`); //DONE
-export const createPost = (data) => api.post('/post', data); // DONE
-export const updatePost = (id, data) => api.put(`/post/${id}`, data); //DONE
+export const getPosts = () => api.get('/post'); 
+export const getPost = (id) => api.get(`/post/${id}`); 
+
+//CREATING and UPDATING POST (CHANGE THIS IF NEEDED)
+export const createPost = (data) => api.post('/post', data); 
+export const updatePost = (id, data) => api.put(`/post/${id}`, data); 
 //export const deletePost = (id) => api.delete(`/post/${id}`);
 
-export const getUserProfile = () => api.get('/profile'); //DONE
-export const login = (data) => api.post('/login', data);//DONE
-export const register = (data) => api.post('/register', data);//DONE
-export const logout = () => api.post('/logout');//DONE
+export const getUserProfile = () => api.get('/profile'); 
+export const login = (data) => api.post('/login', data);
+export const register = (data) => api.post('/register', data);
+export const logout = () => api.post('/logout');

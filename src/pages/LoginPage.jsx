@@ -16,6 +16,9 @@ export default function LoginPage() {
       const userData = { username, password };  // Combine username and password in an object
       const { data } = await login(userData); 
 
+      // Save the token in localStorage after login
+      localStorage.setItem('token', data.token);  // Save JWT token
+      
       setUserInfo(data);
       setRedirect(true);
     } catch (err) {
