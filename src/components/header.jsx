@@ -1,23 +1,24 @@
 import { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
-import axios from "axios";
+import { getUserProfile, logout } from '../utils/api';  // Import the getPosts function
 
 export default function Header() {
   const { setUserInfo, userInfo } = useContext(UserContext);
 
   useEffect(() => {
-    axios
-      .get("https://mern-blog-backend-lhfx.onrender.com/profile", { withCredentials: true })
+    // Use the getUserProfile function from api.js to fetch the profile
+    getUserProfile()
       .then(({ data }) => setUserInfo(data))
       .catch((err) => console.error("Error fetching profile:", err));
-  }, []);
+  }, [setUserInfo]);
 
-  function logout() {
-    axios.post("https://mern-blog-backend-lhfx.onrender.com/logout", {}, { withCredentials: true })
-      .then(() => setUserInfo(null))
+  const handleLogout = () => {
+    // Use the logout function from api.js to log out the user
+    logout()
+      .then(() => setUserInfo(null)) // Clear user info on successful logout
       .catch((err) => console.error("Logout failed:", err));
-  }
+  };
 
   const username = userInfo?.username;
 
@@ -32,7 +33,7 @@ export default function Header() {
           <>
             <span>Hello, <span className='header-name'>{username}</span>!</span>
             <Link to="/create">Create New Post</Link>
-            <a onClick={logout} style={{ cursor: "pointer" }}>Logout</a>
+            <a onClick={handleLogout} style={{ cursor: "pointer" }}>Logout</a>
           </>
         ) : (
           <>

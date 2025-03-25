@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import axios from "axios";
+import { createPost } from "../utils/api";  // Import the createPost function from api.js
 
 export default function CreatePost() {
   const [title, setTitle] = useState('');
@@ -19,12 +19,7 @@ export default function CreatePost() {
     };
 
     try {
-      const response = await axios.post('https://mern-blog-backend-lhfx.onrender.com/post', postData, {
-        withCredentials: true,
-        headers: {
-          'Content-Type': 'application/json', // Ensure you're sending JSON data
-        },
-      });
+      const response = await createPost(postData);  // Use the imported createPost function
 
       console.log("Post created successfully:", response.data);
       setRedirect(true);

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import axios from "axios";
+import { getPost, updatePost } from '../utils/api';  // Import the updatePost function
 
 export default function EditPost() {
   const { id } = useParams();
@@ -12,9 +12,9 @@ export default function EditPost() {
 
   // Fetch the current post details when the component mounts
   useEffect(() => {
-    fetch('https://mern-blog-backend-lhfx.onrender.com/post/' + id)
-      .then(response => response.json())
-      .then(postInfo => {
+    getPost(id)  // Use the getPost function from api.js
+      .then(response => {
+        const postInfo = response.data;
         setTitle(postInfo.title);
         setContent(postInfo.content);
         setSummary(postInfo.summary);
@@ -22,29 +22,17 @@ export default function EditPost() {
   }, [id]);
 
   // Handle the post update
-  async function updatePost(e) {
+  async function updatePostHandle(e) {
     e.preventDefault();
-
-    // Prepare the data as JSON
-    const postData = {
-      id,
-      title,
-      summary,
-      content,
-    };
+    const postData = { id, title, summary, content };
 
     try {
-      const response = await axios.put('https://mern-blog-backend-lhfx.onrender.com/post', postData, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      });
-
+      const response = await updatePost(id, postData);
       if (response.status === 200) {
         setRedirect(true);
       }
-
     } catch (error) {
-      console.error('Error updating post:', error);
+      console.error("Error updating post:", error);
     }
   }
 
@@ -55,7 +43,7 @@ export default function EditPost() {
 
   return (
     <>
-      <form onSubmit={updatePost}>
+      <form onSubmit={updatePostHandle}>
         <input
           type="text"
           placeholder="Title"

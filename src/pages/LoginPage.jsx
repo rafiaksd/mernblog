@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
-import axios from "axios";
+import { login } from '../utils/api';  // Import the new login function
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -9,14 +9,12 @@ export default function LoginPage() {
   const [redirect, setRedirect] = useState(false);
   const { setUserInfo } = useContext(UserContext);
 
-  async function login(e) {
+  async function handleLogin(e) {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post("https://mern-blog-backend-lhfx.onrender.com/login", 
-        { username, password }, 
-        { headers: { "Content-Type": "application/json" }, withCredentials: true }
-      );
+      const userData = { username, password };  // Combine username and password in an object
+      const { data } = await login(userData); 
 
       setUserInfo(data);
       setRedirect(true);
@@ -31,10 +29,10 @@ export default function LoginPage() {
   }
 
   return (
-    <form className="login" onSubmit={login}>
+    <form className="login" onSubmit={handleLogin}>
       <h1>Login</h1>
-      <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
-      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+      <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+      <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button>Login</button>
     </form>
   );

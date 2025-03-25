@@ -1,7 +1,7 @@
 import './App.css'
 import {Route, Routes} from 'react-router-dom'
 import Layout from './components/layout.jsx'
-import IndexPage from './pages/indexpage.jsx'
+import IndexPage from './pages/IndexPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import RegsiterPage from './pages/RegisterPage.jsx'
 import { UserContextProvider } from './contexts/UserContext.jsx'

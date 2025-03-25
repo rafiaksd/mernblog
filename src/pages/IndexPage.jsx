@@ -1,13 +1,13 @@
 import Post from '../components/Post';
 import { useEffect, useState } from 'react';
-import axios from 'axios';  // Import axios
+import { getPosts } from '../utils/api';  // Import the getPosts function
 
 export default function IndexPage() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    // Use axios to fetch posts
-    axios.get('https://mern-blog-backend-lhfx.onrender.com/post')
+    // Use the getPosts function from api.js
+    getPosts()
       .then(response => {
         setPosts(response.data);  // Set the fetched posts to state
       })
